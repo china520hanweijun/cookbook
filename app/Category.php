@@ -9,7 +9,7 @@ class Category extends Model
     //
 
     public function menus(){
-        $this->hasMany('Menu', 'cid');
+        return $this->hasMany('App\Menu', 'cid');
     }
     /**
      * 表明模型是否应该被打上时间戳

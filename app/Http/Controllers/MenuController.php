@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Menu;
+use App\Food;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class MenuController extends Controller
 {
@@ -13,7 +17,11 @@ class MenuController extends Controller
      */
     public function index()
     {
+
         //
+        $menus = DB::table('menus')->orderByDesc('created_at')->simplePaginate(8);
+//        dd($menus);
+        return view('menu.index', ['menus' =>$menus]);
     }
 
     /**
@@ -46,6 +54,14 @@ class MenuController extends Controller
     public function show($id)
     {
         //
+        $menu = Menu::find($id);
+        $menu['author'] = $menu->author->name;
+        $menu['category'] = $menu->category->name;
+        $menu['level'] = $menu->level->name;
+        $menu['foods'] = $menu->foods;
+        $menu['steps'] = $menu->steps;
+//        dd($menu);
+        return view('menu.show', ['menu' => $menu]);
     }
 
     /**
