@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/', 'StaticPageController@index');
+Route::get('/about', 'StaticPageController@about');
+Route::get('/help', 'StaticPageController@help');
+
+#菜谱资源控制器
+Route::resource('menu', 'MenuController');
+

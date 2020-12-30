@@ -36,4 +36,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /*
+     * 用户菜谱
+     */
+    public function menus(){
+        $this->hasMany('Menu');
+    }
 }
