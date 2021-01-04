@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Menu;
-use App\Food;
+use App\Step;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -17,9 +18,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-
         //
-        $menus = DB::table('menus')->orderByDesc('created_at')->simplePaginate(8);
+        $menus = DB::table('menus')->orderByDesc('created_at')->simplePaginate(12);
 //        dd($menus);
         return view('menu.index', ['menus' =>$menus]);
     }
@@ -32,6 +32,7 @@ class MenuController extends Controller
     public function create()
     {
         //
+        return view('menu.create');
     }
 
     /**
@@ -42,7 +43,43 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request->all());
+        //validate验证数据
+        $validateData = $request->validate([
+            'title' => '',
+            'synopsis' => '',
+            'cid' => 'required',
+            'lid' => 'required',
+            'steps' => '',
+        ]);
+        $validateData['uid'] = Auth::id();
+        //获取步骤数组
+        $steps = $validateData['steps'];
+        //销毁
+        unset($validateData['steps']);
+//        新建菜谱
+        $men = new Menu;
+        $men->title = $validateData['title'];
+        $men->synopsis = $validateData['synopsis'];
+        $men->cid = $validateData['cid'];
+        $men->lid = $validateData['lid'];
+        $men->uid = $validateData['uid'];
+        $men->save();
+//        $new = Menu::created($validateData);
+        $mid = $men->id;
+        //菜谱步骤
+        foreach ($steps as $k => $v){
+            $s = new Step;
+            $s->mid = $mid;
+            $s->step_order = $k;
+            $s->detail = $v;
+            $s->save();
+//            $arr = array('mid'=>$mid, 'step_order' => $k, 'datail' => $v);
+////            dd($arr);
+//            Step::created($steps);
+        }
+
+        return $this->show($mid);
     }
 
     /**

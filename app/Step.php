@@ -13,4 +13,10 @@ class Step extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    //黑名单
+    protected $guarded = [];
+
+    //白名单
+    protected $fillable = ['mid', 'step_order', 'detail'];
 }

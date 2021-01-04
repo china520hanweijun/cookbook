@@ -1,22 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-{{--    {{$menus}}--}}
+@extends('layouts.app')
+
+@section('content')
 @foreach($menus as $m)
-    <p>
-        {{$m->title}}<br>
-        {{$m->id}}<br>
+    <div>
+        <a href="{{@route('menu.show', $m->id)}}"> {{$m->title}}</a><br>
         {{$m->synopsis}}<br>
-{{--        {{$m->author->name}}<br>--}}
-    </p>
+    </div>
     <hr>
     @endforeach
-</body>
-</html>
+{{$menus->links()}}
+@endsection

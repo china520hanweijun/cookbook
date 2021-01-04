@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             #父分类
-            $table->integer('pid');
+            $table->integer('pid')->default(0);
 //            $table->timestamps();
         });
     }

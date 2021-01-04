@@ -8,7 +8,7 @@ class StaticPageController extends Controller
 {
     //
     public function index(){
-        return '首页';
+        return view('index');
     }
 
     public function about(){

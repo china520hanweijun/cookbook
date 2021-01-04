@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    /*
+     * 批量赋值属性
+     */
+    protected $fillable = ['title', 'synopsis', 'uid', 'cid', 'lid'];
+
     //作者
     public function author(){
         return $this->belongsTo('App\User', 'uid');

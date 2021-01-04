@@ -22,3 +22,7 @@ Route::get('/help', 'StaticPageController@help');
 #菜谱资源控制器
 Route::resource('menu', 'MenuController');
 
+#用户认证
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
